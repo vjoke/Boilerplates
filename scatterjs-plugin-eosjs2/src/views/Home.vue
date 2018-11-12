@@ -85,12 +85,21 @@
     // -------------------------------------------------
     // OPTIONAL: ScatterJS exports another class called Network which is a useful helper
     // https://github.com/GetScatter/scatter-js/blob/master/packages/core/src/models/Network.js
+    // const network = Network.fromJson({
+    //     blockchain:'eos',
+    //     host:'nodes.get-scatter.com',
+    //     port:443,
+    //     protocol:'https',
+    //     chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906' // <-- this is the MAINNET
+    // });
+
+    // ray modified
     const network = Network.fromJson({
         blockchain:'eos',
-        host:'nodes.get-scatter.com',
-        port:443,
-        protocol:'https',
-        chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906' // <-- this is the MAINNET
+        host:'api-kylin.eoshenzhen.io',
+        port:8890,
+        protocol:'http',
+        chainId:'5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191' // <-- this is the MAINNET
     });
 
 

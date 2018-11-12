@@ -49,6 +49,8 @@
           <button class="small" :class="{'grey':transferType !== 'builtin'}" @click="transferType = 'builtin'">Builtin Transfer</button>
           <button class="small" :class="{'grey':transferType !== 'contract'}" @click="transferType = 'contract'">Contract Transfer</button>
           <button class="small" :class="{'grey':transferType !== 'transaction'}" @click="transferType = 'transaction'">Transaction Transfer</button>
+          <br>
+          <button class="small" :class="{'grey':transferType !== 'match_openaccount'}" @click="transferType = 'match_openaccount'">Open Account</button>
 
           <section v-if="result">
             <br>
@@ -91,13 +93,23 @@
     // -------------------------------------------------
     // OPTIONAL: ScatterJS exports another class called Network which is a useful helper
     // https://github.com/GetScatter/scatter-js/blob/master/packages/core/src/models/Network.js
+    // const network = Network.fromJson({
+    //     blockchain:'eos',
+    //     host:'nodes.get-scatter.com',
+    //     port:443,
+    //     protocol:'https',
+    //     chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906' // <-- this is the MAINNET
+    // });
+
+    // ray modified
     const network = Network.fromJson({
         blockchain:'eos',
-        host:'nodes.get-scatter.com',
-        port:443,
-        protocol:'https',
-        chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906' // <-- this is the MAINNET
+        host:'api-kylin.eoshenzhen.io',
+        port:8890,
+        protocol:'http',
+        chainId:'5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191' // <-- this is the kylin network 
     });
+
 
 
     // Notice that our eosjs reference isn't reactive ( in the data() method like the rest ).
@@ -199,8 +211,14 @@
                         contracts.eosio_token.transfer(this.account.name, 'safetransfer', '2.0000 EOS', this.account.name, options);
                     }, options).then(completed).catch(completed)
                 }
+                // for match contract
+                if(this.transferType === 'match_openaccount') {
+                    eos.contract('yyy111111111').then(contract => {
+                        contract.openaccount(this.account.name, 1, this.account.name, options)
+                            .then(completed).catch(completed);
+                    });
+                }
             },
-
 
             setEosInstance(){
                 if(this.account){
